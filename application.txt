@@ -1,0 +1,49 @@
+//run swag init
+//go install github.com/swaggo/swag/cmd/swag@latest
+$GOPATH/bin/swag init 
+
+
+//docker cmd
+# Build the docker image
+docker build -t go-rest .
+
+# Tag the image
+docker tag go-rest:latest vishweshc/go-rest:1.0.0
+
+# Login to docker with your docker Id
+docker login
+
+# Push the image to docker hub
+docker push vishweshc/go-rest:1.0.0
+
+
+//kubernetes cmd
+# minikube start
+minikube start
+
+# k8 deployment
+kubectl apply -f K8-deployment/k8s-deployment.yml
+
+# k8 get deployment & pods
+kubectl get deployments
+kubectl get pods
+kubectl get services
+
+# get service url
+minikube service go-rest-service --url
+
+#logs of pods
+kubectl logs -f <name>
+kubectl logs -f go-rest-5d599f57b7-nhqwd
+
+# port forwarding or connecting to pod
+kubectl port-forward <name> localPort : imagePort
+kubectl port-forward go-rest-bb46f74c9-k2bf9 8080:8080
+
+# Deleting cmd
+kubectl delete pod <name>         //(mentioned in get cmd)
+kubectl delete service  <name>
+kubectl delete deployment  <name>  
+
+# remove dangling images and containers
+docker system prune

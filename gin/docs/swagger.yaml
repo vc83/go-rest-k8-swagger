@@ -1,0 +1,47 @@
+basePath: /api/v1
+definitions:
+  main.FailureResponseStruct:
+    properties:
+      message:
+        type: string
+    type: object
+  main.QueryParam:
+    properties:
+      age:
+        type: integer
+      name:
+        type: string
+    type: object
+  main.SuccessResponseStruct:
+    properties:
+      message:
+        $ref: '#/definitions/main.QueryParam'
+    type: object
+info:
+  contact: {}
+paths:
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - description: params
+        in: query
+        name: params
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessResponseStruct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.FailureResponseStruct'
+      summary: ping example
+      tags:
+      - queryParam
+swagger: "2.0"
